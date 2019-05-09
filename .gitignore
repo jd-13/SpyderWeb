@@ -1,0 +1,3 @@
+build/*
+dist/*
+SpyderWeb.egg-info/*
