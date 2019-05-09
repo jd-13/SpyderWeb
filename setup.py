@@ -1,7 +1,11 @@
+"""
+pip setup
+"""
+
 from setuptools import setup
 
 setup(
-    name="SpyderWeb",
+    name="spyderweb",
     version='0.1.0',
     description="",
     #long_description=long_description,
@@ -22,6 +26,6 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     keywords="",
-    packages=["SpyderWeb"],
-    install_requires=[],
+    packages=["spyderweb"],
+    install_requires=["htmlmin"],
 )
