@@ -8,12 +8,14 @@ import shutil
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from spyderweb.rendering import setMinify, getRegisteredRenderers
+from spyderweb.rendering import setMinify, getRegisteredRenderers, setOutputPath
 
-def build(jinjaPackage, minifyPath, jsPath):
+def build(jinjaPackage, minifyPath, jsSrcPath, outputPath):
     """
     Runs the build.
     """
+    setOutputPath(outputPath)
+
     # Setup inputs
     parser = argparse.ArgumentParser(description="Build HTML and JS sources")
     parser.add_argument("-m", nargs='+',
@@ -34,8 +36,7 @@ def build(jinjaPackage, minifyPath, jsPath):
 
     # Minify or copy js
     if "js" in args.minify:
-
-        subprocess.run([minifyPath, jsPath, "-d", "js"])
+        subprocess.run([minifyPath, jsSrcPath, "-d", "js"])
     else:
         shutil.rmtree("js", ignore_errors=True)
-        shutil.copytree(jsPath, "js")
+        shutil.copytree(jsSrcPath, os.path.join(outputPath, "js"))

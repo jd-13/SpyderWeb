@@ -1,13 +1,15 @@
 """
-Contains all the functionality which renders the jinja2 templates.
+Contains all the functionality which renders the HTML jinja2 templates.
 """
 
 import functools
+import os
 
 import htmlmin
 
 RENDERERS = []
 MINIFY = True
+OUTPUT_PATH = os.getcwd()
 
 def getRegisteredRenderers():
     """
@@ -21,6 +23,15 @@ def setMinify(val):
     """
     global MINIFY
     MINIFY = val
+
+def setOutputPath(val):
+    """
+    Set the path to output the html files.
+
+    Defaults to current working directory.
+    """
+    global OUTPUT_PATH
+    OUTPUT_PATH = val
 
 def registerRenderer(func):
     """
@@ -43,7 +54,7 @@ def outputToFile(fileName):
                                               remove_comments=True,
                                               remove_empty_space=True)
 
-            with open(fileName, "w") as fileOut:
+            with open(os.path.join(OUTPUT_PATH, fileName), "w") as fileOut:
                 fileOut.write(renderedHtml)
 
             print(f"Built file {fileName}")
