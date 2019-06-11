@@ -3,6 +3,7 @@ The entry point for spyderweb.
 """
 
 import argparse
+import os
 import subprocess
 import shutil
 
@@ -35,8 +36,9 @@ def build(jinjaPackage, minifyPath, jsSrcPath, outputPath):
         renderer(env)
 
     # Minify or copy js
+    jsOutputPath = os.path.join(outputPath, "js")
     if "js" in args.minify:
-        subprocess.run([minifyPath, jsSrcPath, "-d", "js"])
+        subprocess.run([minifyPath, jsSrcPath, "-d", jsOutputPath])
     else:
         shutil.rmtree("js", ignore_errors=True)
-        shutil.copytree(jsSrcPath, os.path.join(outputPath, "js"))
+        shutil.copytree(jsSrcPath, jsOutputPath)
