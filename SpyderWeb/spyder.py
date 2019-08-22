@@ -11,7 +11,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 
 from spyderweb.rendering import setMinify, getRegisteredRenderers, setOutputPath
 
-def build(jinjaPackage, minifyPath, jsSrcPath, outputPath):
+def build(jinjaPackage, minifyPath, outputPath, jsSrcPath=None, cssSrcPath=None):
     """
     Runs the build.
     """
@@ -36,9 +36,20 @@ def build(jinjaPackage, minifyPath, jsSrcPath, outputPath):
         renderer(env)
 
     # Minify or copy js
-    jsOutputPath = os.path.join(outputPath, "js")
-    if "js" in args.minify:
-        subprocess.run([minifyPath, jsSrcPath, "-d", jsOutputPath])
-    else:
-        shutil.rmtree("js", ignore_errors=True)
-        shutil.copytree(jsSrcPath, jsOutputPath)
+    if jsSrcPath != None:
+        jsOutputPath = os.path.join(outputPath, "js")
+        if "js" in args.minify:
+            subprocess.run([minifyPath, jsSrcPath, "-d", jsOutputPath])
+        else:
+            shutil.rmtree(jsOutputPath, ignore_errors=True)
+            shutil.copytree(jsSrcPath, jsOutputPath)
+
+    # Copy css (don't minify yet)
+    if cssSrcPath != None:
+        cssOutputPath = os.path.join(outputPath, "css")
+
+        shutil.rmtree(cssOutputPath, ignore_errors=True)
+        shutil.copytree(cssSrcPath, cssOutputPath)
+
+
+
