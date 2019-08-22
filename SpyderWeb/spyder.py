@@ -50,6 +50,3 @@ def build(jinjaPackage, minifyPath, outputPath, jsSrcPath=None, cssSrcPath=None)
 
         shutil.rmtree(cssOutputPath, ignore_errors=True)
         shutil.copytree(cssSrcPath, cssOutputPath)
-
-
-
