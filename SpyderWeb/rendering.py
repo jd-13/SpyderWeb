@@ -54,6 +54,12 @@ def outputToFile(fileName):
                                               remove_comments=True,
                                               remove_empty_space=True)
 
+            # Create the directory if necessary
+            parentDir = os.path.dirname(fileName)
+            if parentDir != "":
+                os.makedirs(os.path.join(OUTPUT_PATH, parentDir), exist_ok=True)
+
+            # Write out the rendered file
             with open(os.path.join(OUTPUT_PATH, fileName), "w") as fileOut:
                 fileOut.write(renderedHtml)
 
